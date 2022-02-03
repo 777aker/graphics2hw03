@@ -8,17 +8,45 @@ uniform float time;
 
 varying vec3 ModelPos;
 
+uniform float one; // yes, I am passing in the number 1, to try and trick the compiler
+
 //http://www.science-and-fiction.org/rendering/noise.html
 float rand3D(in vec3 co) {
-    return fract(sin(dot(co.xyz, vec3(12.9898, 78.233, 144.7272))) * 43758.5453);
+    float result = 0;
+    result += co.x * 12.9898 * one;
+    result += co.y * 78.233 * one;
+    result += co.z * 144.7272;
+    result = sin(result*one);
+    result = result * 43758.5453;
+    result = result - floor(result*one);
+    return result;
 }
 
 void main()
 {
    //gl_FragColor = blinn() * texture2D(tex,gl_TexCoord[0].xy);
-   float dis = clamp(1-distance(Light,ModelPos)*11/75, 0, 5)*2.5;
+   //float dis = clamp(1-distance(Light,ModelPos)*11/75, 0, 5)*2.5;
+   
+   float dis = (Light.x-ModelPos.x)*(Light.x-ModelPos.x)*one;
+   dis = dis*one + (Light.y-ModelPos.y)*(Light.y-ModelPos.y);
+   dis = dis*one + (Light.z-ModelPos.z)*(Light.z-ModelPos.z);
+   dis = sqrt(dis*one);
+   dis = 1-(dis/5+dis/6*one)/2.5*one;
+   if(dis*one < 0) {
+        dis = 0;
+   } else if(dis*one > 5) {
+        dis = 5;
+   }
+   dis = dis * 2.5;
+   
    vec4 color = vec4(dis, dis, dis, 1);
-   color += (fract(sin(dot(floor((ModelPos-time/5)*10), vec3(12.9898, 78.233, 144.7272))) * 43758.5453)<= 0.2) ? 1 : 0;
+   float len = length(color);
+   // meh, this is cool, whatever I give up on performance
+   if(rand3D(floor((ModelPos-time/5)*10)) <= 0.2 && len >= 1.2)
+       color += one;
+   else
+       discard;
+   
    gl_FragColor = color;
 
    /* sorry, just ignore this please. it's some cool stuff I was messing with

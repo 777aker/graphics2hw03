@@ -1,5 +1,5 @@
 HW03: Performance
-Mostly copied from ex04
+Mostly copied from ex04 and a little bit of hw02
 
 Kelley Kelley
 CSCI4239/5239 Spring 2022
@@ -7,8 +7,7 @@ CSCI4239/5239 Spring 2022
 allows you to switch between a poorly written shader and as best I could shader
 
 Time Spent:
-4-530
-630-
+6 hours
 
 Key Bindings:
   m   switch between bad and good shader
@@ -19,9 +18,11 @@ Key Bindings:
   ESC    Exit
 
 Results:
-discard vs just set pixel to background color: 40 or more fps difference
+discard vs just set pixel to background color: 40 or more fps difference (about 10%)
 function call vs inline really had no effect
 overclock on/off: while on it was consistently +- 5 fps around 438, while off it peaked at 443 but was extremely variable and sometimes went to 330 fps (-100)
 Unplugged: weirdly, while unplugging or plugging back in, the fps jumped to 500, then was chaotic for awhile before settling at around 5 fps lower than original
 I couldn't really think of a good way to test float vs int since I need floats, but as you suggested int may be worse since graphics cards are made for floats
 now I'm just going to make a really bad shader to see how much worse it can be
+
+it's too good. I can't make it any worse. dang compiler

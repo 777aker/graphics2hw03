@@ -41,6 +41,9 @@ void display(GLFWwindow* window) {
 	float t = glfwGetTime();
 	int id = glGetUniformLocation(pershader, "time");
 	glUniform1f(id, t);
+	id = glGetUniformLocation(pershader, "one");
+	float one = 1;
+	glUniform1f(id, one);
 	// draw a sky sphere
 	Sphere(0, 0, 0, 6, 0, 15, tex);
 
